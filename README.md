@@ -12,10 +12,11 @@ This project provides a simple example of how to implement path-based routing in
 - Modify the docker image with the help of /bin/bash to display as welcome to microservices.
 - create the service files to run on port no 80
 - Dont mention the type of service by default it take  as *clusterip*.
-- if you want to expose the service as NodePort or LoadBalancer mention in the service as Type= nodeport / LoadBalancer    
+- if you want to expose the service as NodePort or LoadBalancer mention in the service as Type= nodeport / LoadBalancer.
+      
 
 
-## Step 1: Set Up the AWS EKS Environment
+## Step 2: Set Up the AWS EKS Environment
 
 - configure the AWS CLI in the computer . Create a Cluster with EKSCTL with the help command.
 - Take T2.medium as instance . 
@@ -51,7 +52,9 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 ![image](https://github.com/user-attachments/assets/d45190d7-ed94-48cf-8bc9-6f1b07fcd906)
 
 
-
+- Create the ingress.yaml file with help of ingress Documentation.configure the required details like ingressClassName = NGINX .
+- In that ingress.yaml, the developer write the rules for requests the traffic to which service.
+- the ingress controller work is to follow the rules  and route the traffic to desired services.
 - The Nginx Ingress Controller routes incoming HTTP/HTTPS requests to the appropriate service in the Kubernetes cluster based on rules defined in an Ingress resource. These rules can include hostnames mohankrishna.co.in and pathslike /service1.
 - 
 
@@ -59,5 +62,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 ![image](https://github.com/user-attachments/assets/acaf4fe2-9e15-4b46-91a7-4b47adca4b31)
 
 ## Delete the Resources
+
+- After the demonstation done delete the Cluster. 
 
 ![image](https://github.com/user-attachments/assets/5a9ff650-df1d-4bce-b744-775af44bc8d6)
