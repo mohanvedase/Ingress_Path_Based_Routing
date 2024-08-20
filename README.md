@@ -128,6 +128,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 
 
 **this Ingress creates a single entry point for your application with different access paths. It routes traffic based on the path prefix in the request URL to the corresponding Service.**
+
 **The Interaction Process**
 #### *Ingress Creation:*
 
