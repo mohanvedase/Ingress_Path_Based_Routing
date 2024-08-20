@@ -56,11 +56,8 @@ This project provides a simple example of how to implement path-based routing in
  ```
   ![image](https://github.com/user-attachments/assets/d02f2d48-be93-496f-bbac-1a24e75e1b04)
 
-  ![image](https://github.com/user-attachments/assets/a498fb4f-eef4-4a23-8f17-96a71c32f0ae)
 
-  ![image](https://github.com/user-attachments/assets/36fecf8d-47cc-4429-a29e-313447d0cb30)
 
-  ![image](https://github.com/user-attachments/assets/b87f544d-52af-4032-904d-af0ed01c22bf)
 
 ### Commands
 #### Deployment Commands
@@ -69,12 +66,21 @@ This project provides a simple example of how to implement path-based routing in
 - kubectl create -f microservice_3.yaml
 - kubectl create -f microservice_4.yaml
 - kubectl create -f microservice_5.yaml
+  
+  ![image](https://github.com/user-attachments/assets/a498fb4f-eef4-4a23-8f17-96a71c32f0ae)
+  ![image](https://github.com/user-attachments/assets/36fecf8d-47cc-4429-a29e-313447d0cb30)
+  
 #### Service Commands
 - kubectl create -f service1.yaml
 - kubectl create -f service2.yaml
 - kubectl create -f service3.yaml
 - kubectl create -f service4.yaml
 - kubectl create -f service5.yaml
+
+  ![image](https://github.com/user-attachments/assets/b87f544d-52af-4032-904d-af0ed01c22bf)
+
+
+
 
 
 ## Step 3: Install the Nginx ingress controller in the cluster 
