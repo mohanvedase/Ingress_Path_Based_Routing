@@ -1,31 +1,36 @@
 # Ingress_Path_Based_Routing
 This project provides a simple example of how to implement path-based routing in Kubernetes using Nginx Ingress. It's a great starting point for understanding how to manage multiple microservices under a single domain.
 # Prerequisites
-- We need to install the below before starting the project.
+- We need to install the following before starting the project.
 
 1. **aws-cli**
 2. **EKSCTL**
 3. **Kubectl**
 
-## Step 1: create the deployment yaml  files
-- Take Nginx as base image create 5 deployment files for the Demo project .
+## Step 1: Create the YAML Manifest files
+### Step 1.1 Create Deployment files
+- Take Nginx as a base image and create 5 deployment files for the Demo project.
 - Modify the docker image with the help of /bin/bash to display as welcome to microservices.
-- create the service files to run on port no 80
-- Dont mention the type of service by default it take  as *clusterip*.
+### Step 1.2 Create Service Manifest files
+- create the service files to run on port no 80 
+- Don't mention the type of service by default it takes  as *clusterip*.
 - if you want to expose the service as NodePort or LoadBalancer mention in the service as Type= nodeport / LoadBalancer.
       
 
 
 ## Step 2: Set Up the AWS EKS Environment
 
-- configure the AWS CLI in the computer . Create a Cluster with EKSCTL with the help command.
-- Take T2.medium as instance . 
+- configure the AWS CLI in the computer.
+- ![image](https://github.com/user-attachments/assets/a59f3c39-4d1d-4926-bea5-3bb9a760f844)
+
+- Create a Cluster with EKSCTL with the help command.
+- Take T2.medium as instance. 
 ```
   eksctl create cluster --name demo-cluster-7 --region ap-south-1 --version 1.24 --nodegroup-name standard-workers --node-type t2.medium --nodes 2 --nodes-min 1 --nodes-max 2 --managed
 ```
 ![image](https://github.com/user-attachments/assets/198ca947-a43f-4409-a9b9-cacba955abcc)
 
-- Update the .Kube-config with
+- Update the.Kube-config 
  ```
   aws eks --region ap-south-1 update-kubeconfig --name demo-cluster-7
  ```
@@ -52,10 +57,10 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 ![image](https://github.com/user-attachments/assets/d45190d7-ed94-48cf-8bc9-6f1b07fcd906)
 
 
-- Create the ingress.yaml file with help of ingress Documentation.configure the required details like ingressClassName = NGINX .
-- In that ingress.yaml, the developer write the rules for requests the traffic to which service.
+- Create the ingress.yaml file with the help of ingress Documentation. Configure the required details like ingressClassName = NGINX.
+- In that ingress.yaml, the developer writes the rules for requests for the traffic to which service.
 - the ingress controller work is to follow the rules  and route the traffic to desired services.
-- The Nginx Ingress Controller routes incoming HTTP/HTTPS requests to the appropriate service in the Kubernetes cluster based on rules defined in an Ingress resource. These rules can include hostnames mohankrishna.co.in and pathslike /service1.
+- The Nginx Ingress Controller routes incoming HTTP/HTTPS requests to the appropriate service in the Kubernetes cluster based on rules defined in an Ingress resource. These rules can include hostnames mohankrishna.co.in and paths like /service1.
 - 
 
 ![image](https://github.com/user-attachments/assets/0383b5e1-6073-4323-baf0-b75d2b656f8b)
@@ -63,6 +68,6 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 
 ## Delete the Resources
 
-- After the demonstation done delete the Cluster. 
+- After the demonstration is done delete the Cluster. 
 
 ![image](https://github.com/user-attachments/assets/5a9ff650-df1d-4bce-b744-775af44bc8d6)
