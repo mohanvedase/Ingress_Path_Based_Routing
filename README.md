@@ -1,5 +1,5 @@
 # Ingress_Path_Based_Routing
-This project provides a simple example of how to implement path-based routing in Kubernetes using Nginx Ingress. It's a great starting point for understanding how to manage multiple microservices under a single domain.
+This project demonstrates path-based routing in Kubernetes using Nginx Ingress. It creates five microservices and exposes them through a single entry point with different paths. Nginx Ingress Controller translates Ingress rules into configurations to route traffic to the appropriate backend service. An Elastic Load Balancer can be integrated for external access.
 
 ## Architecture
 ![Demo-project - Page 1 (1)](https://github.com/user-attachments/assets/dd3b012f-76ad-48f9-9d91-37aad71d6553)
@@ -25,7 +25,7 @@ This project provides a simple example of how to implement path-based routing in
 ### Step 1.2 Create Service Manifest files
 - Defines a network service for a set of Pods.
 - Exposes Pods as a single endpoint using a virtual IP.
-- In the service files there are different Types to expose the application. they are ClusterIP, NodePort, LoadBalancer, ExternalName.
+- In the service files there are different Types to expose the application. they are ClusterIP, NodePort, LoadBalancer, and ExternalName.
 - Don't mention the type of service by default it takes  as *clusterip*.
 - if you want to expose the service as NodePort or LoadBalancer mention in the service as Type= nodeport / LoadBalancer.
 - Service Object: Defines a network service for a set of Pods. This manifest creates a Service named "service1".
@@ -127,7 +127,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
                         * Similar rules exist for `service3`, `service4`, and `service5`.
 
 
-**this Ingress creates a single entry point for your application with different access paths. It routes traffic based on the path prefix in the request URL to the corresponding Service.**
+**This Ingress creates a single entry point for your application with different access paths. It routes traffic based on the path prefix in the request URL to the corresponding Service.**
 
 **The Interaction Process**
 #### *Ingress Creation:*
@@ -162,8 +162,13 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 ![image](https://github.com/user-attachments/assets/0383b5e1-6073-4323-baf0-b75d2b656f8b)
 ![image](https://github.com/user-attachments/assets/acaf4fe2-9e15-4b46-91a7-4b47adca4b31)
 
+
+
 ## Step 4: Delete the Resources
 
 - After the demonstration is done delete the Cluster. 
 
 ![image](https://github.com/user-attachments/assets/5a9ff650-df1d-4bce-b744-775af44bc8d6)
+
+This project provides a foundational understanding of path-based routing in Kubernetes using Nginx Ingress. While this example focuses on a simple setup with multiple microservices, the concept can be extended to complex, multi-service environments. By mastering this technique, you can efficiently manage and scale your applications while maintaining a clean and organized architecture.
+
