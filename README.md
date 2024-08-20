@@ -1,5 +1,5 @@
 # Ingress_Path_Based_Routing
-This project demonstrates path-based routing in Kubernetes using Nginx Ingress. It creates five microservices and exposes them through a single entry point with different paths. Nginx Ingress Controller translates Ingress rules into configurations to route traffic to the appropriate backend service. An Elastic Load Balancer can be integrated for external access.
+This project demonstrates path-based routing in Kubernetes using Nginx Ingress. It creates five microservices and exposes them through a single entry point with different paths. Nginx Ingress Controller translates Ingress rules into configurations to route traffic to the appropriate backend service. A Load Balancer can be integrated for external access.
 
 ## Architecture
 ![Demo-project - Page 1 (1)](https://github.com/user-attachments/assets/dd3b012f-76ad-48f9-9d91-37aad71d6553)
