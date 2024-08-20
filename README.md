@@ -11,10 +11,24 @@ This project provides a simple example of how to implement path-based routing in
 ### Step 1.1 Create Deployment files
 - Take Nginx as a base image and create 5 deployment files for the Demo project.
 - Modify the docker image with the help of /bin/bash to display as welcome to microservices.
+- Deployment Object: Defines the desired state of a set of Pods. This manifest creates a Deployment named "service2".
+- Replica Count: Specifies the desired number of Pods for the Deployment. In this case, it's set to 1.
+- Pod Template: Describes the configuration for each Pod in the Deployment.
+- Container Image: Defines the container image to be used for the Pod. Here, it's using the Nginx image.
+- Container Port: Specifies the port exposed by the container. In this case, it's port 80.
+- Container Command: Sets the command to be executed inside the container. It's configured to create an index.html file with a welcome message and then start the Nginx server.
+- Resource Requests and Limits: Defines the minimum and maximum resource requirements for the container, ensuring it doesn't consume more resources than allocated.
 ### Step 1.2 Create Service Manifest files
-- create the service files to run on port no 80 
+- Defines a network service for a set of Pods.
+- Exposes Pods as a single endpoint using a virtual IP.
+- In the service files there are different Types to expose the application. they are: ClusterIP, NodePort, LoadBalancer, ExternalName.
+- In the demo we create the service files to run on port no 80 
 - Don't mention the type of service by default it takes  as *clusterip*.
 - if you want to expose the service as NodePort or LoadBalancer mention in the service as Type= nodeport / LoadBalancer.
+- Service Object: Defines a network service for a set of Pods. This manifest creates a Service named "service1".
+- Selector: Specifies the label selector to identify which Pods belong to this Service. In this case, Pods with the label "app: service1" will be part of this Service.
+- Port: Defines the port on which the Service will listen for traffic. The protocol is TCP, the port is 80 (external port), and the targetPort is 80 (port on the Pod).
+- This means that traffic to port 80 of the Service will be forwarded to port 80 of the Pods selected by the selector.
       
 
 
@@ -30,7 +44,10 @@ This project provides a simple example of how to implement path-based routing in
 ```
 ![image](https://github.com/user-attachments/assets/198ca947-a43f-4409-a9b9-cacba955abcc)
 
-- Update the.Kube-config 
+- Update the.Kube-config with the following command
+- It Stores configuration for accessing Kubernetes clusters.
+- It Contains cluster endpoints, user credentials, and contexts.
+- It is used to Update to switch between clusters, users, or namespaces.
  ```
   aws eks --region ap-south-1 update-kubeconfig --name demo-cluster-7
  ```
@@ -42,10 +59,16 @@ This project provides a simple example of how to implement path-based routing in
 
   ![image](https://github.com/user-attachments/assets/b87f544d-52af-4032-904d-af0ed01c22bf)
 
+### Commands
+#### Deployment Commands
+- kubectl create -f microservice_1.yaml
+- kubectl create -f microservice_2.yaml
+- kubectl create -f microservice_3.yaml
+- kubectl create -f microservice_4.yaml
+- kubectl create -f microservice_5.yaml
 
 
-
-## Install the Nginx ingress controller in the cluster 
+## Step 3: Install the Nginx ingress controller in the cluster 
 - from the ingress documentation copy the yaml script run in the cluster .
 - ingress-nginx is an Ingress controller for Kubernetes using [NGINX](https://www.nginx.org/) as a reverse proxy and load
 balancer.
@@ -57,16 +80,64 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 ![image](https://github.com/user-attachments/assets/d45190d7-ed94-48cf-8bc9-6f1b07fcd906)
 
 
-- Create the ingress.yaml file with the help of ingress Documentation. Configure the required details like ingressClassName = NGINX.
-- In that ingress.yaml, the developer writes the rules for requests for the traffic to which service.
-- the ingress controller work is to follow the rules  and route the traffic to desired services.
-- The Nginx Ingress Controller routes incoming HTTP/HTTPS requests to the appropriate service in the Kubernetes cluster based on rules defined in an Ingress resource. These rules can include hostnames mohankrishna.co.in and paths like /service1.
-- 
+## Ingress Manifest Breakdown:
+
+* **API Version:** `networking.k8s.io/v1` - Specifies the API version used for Ingress resources.
+* **Kind:** `Ingress` - Defines the type of resource being created (an Ingress).
+* **Metadata:**
+    * **Name:** `sample-ingress` - Assigns a name to the Ingress resource.
+    * **Annotations:** (Optional) Additional information for the Ingress controller.
+        * `nginx.ingress.kubernetes.io/rewrite-target: /` - Re-writes incoming requests to remove the path component (useful for root path access).
+
+* **Spec:** Defines the configuration details for the Ingress.
+    * **ingressClassName:** `nginx` - Specifies the Ingress controller to be used (likely Nginx Ingress Controller in this case).
+    * **Rules:** An array of rules for routing incoming traffic.
+        * Each rule has the following properties:
+            * **host:** (Optional) The hostname to match for the rule. Empty string (`""`) matches any hostname.
+            * **http:** Defines HTTP routing configuration.
+                * **paths:** An array of path definitions.
+                    * Each path definition has the following properties:
+                        * **path:** The path prefix to match incoming requests. 
+                            * `/service1` - Matches requests starting with "/service1".
+                        * **pathType:** Defines how to match the path.
+                            * `Prefix` - Matches any request starting with the specified path.
+                        * **backend:** Defines the backend service to route traffic to.
+                            * **service:** 
+                                * **name:** The name of the Service to target.
+                                * **port:** 
+                                    * **number:** Specifies the port on the Service to forward traffic to (80 in all cases here).
+                    * This Ingress defines multiple paths:
+                        * `/service1` - Routes traffic to `service1` on port 80.
+                        * `/service2` - Routes traffic to `service2` on port 80.
+                        * Similar rules exist for `service3`, `service4`, and `service5`.
+
+
+**this Ingress creates a single entry point for your application with different access paths. It routes traffic based on the path prefix in the request URL to the corresponding Service.**
+**The Interaction Process**
+*Ingress Creation:*
+
+- We create and apply the Ingress manifest to our Kubernetes cluster. This defines the desired routing rules.
+*Ingress Controller Watches:*
+
+- The Nginx Ingress Controller constantly monitors for changes in Ingress resources.
+- Upon detecting the new Ingress, it processes the configuration.
+*Configuration Generation:*
+
+- The Ingress controller translates the Ingress rules into Nginx configuration. This involves creating Nginx virtual servers, locations, and proxy configurations to match the Ingress rules.
+*Nginx Configuration Update:*
+
+- The controller reloads Nginx to apply the new configuration. This typically involves sending a signal to the Nginx process or using configuration hot reloading.
+*Traffic Routing:*
+
+- Incoming traffic is directed to the Nginx Ingress controller.
+- Nginx uses the configured virtual servers and locations to route traffic to the appropriate backend service based on the Ingress rules.
+
+
 
 ![image](https://github.com/user-attachments/assets/0383b5e1-6073-4323-baf0-b75d2b656f8b)
 ![image](https://github.com/user-attachments/assets/acaf4fe2-9e15-4b46-91a7-4b47adca4b31)
 
-## Delete the Resources
+## Step 4: Delete the Resources
 
 - After the demonstration is done delete the Cluster. 
 
