@@ -1,5 +1,9 @@
 # Ingress_Path_Based_Routing
 This project provides a simple example of how to implement path-based routing in Kubernetes using Nginx Ingress. It's a great starting point for understanding how to manage multiple microservices under a single domain.
+
+## Architecture
+![Demo-project - Page 1 (1)](https://github.com/user-attachments/assets/dd3b012f-76ad-48f9-9d91-37aad71d6553)
+
 # Prerequisites
 - We need to install the following before starting the project.
 
@@ -21,8 +25,7 @@ This project provides a simple example of how to implement path-based routing in
 ### Step 1.2 Create Service Manifest files
 - Defines a network service for a set of Pods.
 - Exposes Pods as a single endpoint using a virtual IP.
-- In the service files there are different Types to expose the application. they are: ClusterIP, NodePort, LoadBalancer, ExternalName.
-- In the demo we create the service files to run on port no 80 
+- In the service files there are different Types to expose the application. they are ClusterIP, NodePort, LoadBalancer, ExternalName.
 - Don't mention the type of service by default it takes  as *clusterip*.
 - if you want to expose the service as NodePort or LoadBalancer mention in the service as Type= nodeport / LoadBalancer.
 - Service Object: Defines a network service for a set of Pods. This manifest creates a Service named "service1".
