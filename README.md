@@ -66,6 +66,12 @@ This project provides a simple example of how to implement path-based routing in
 - kubectl create -f microservice_3.yaml
 - kubectl create -f microservice_4.yaml
 - kubectl create -f microservice_5.yaml
+#### Service Commands
+- kubectl create -f service1.yaml
+- kubectl create -f service2.yaml
+- kubectl create -f service3.yaml
+- kubectl create -f service4.yaml
+- kubectl create -f service5.yaml
 
 
 ## Step 3: Install the Nginx ingress controller in the cluster 
@@ -114,23 +120,32 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 
 **this Ingress creates a single entry point for your application with different access paths. It routes traffic based on the path prefix in the request URL to the corresponding Service.**
 **The Interaction Process**
-*Ingress Creation:*
+#### *Ingress Creation:*
 
 - We create and apply the Ingress manifest to our Kubernetes cluster. This defines the desired routing rules.
-*Ingress Controller Watches:*
+#### *Ingress Controller Watches:*
 
 - The Nginx Ingress Controller constantly monitors for changes in Ingress resources.
 - Upon detecting the new Ingress, it processes the configuration.
-*Configuration Generation:*
+#### *Configuration Generation:*
 
 - The Ingress controller translates the Ingress rules into Nginx configuration. This involves creating Nginx virtual servers, locations, and proxy configurations to match the Ingress rules.
-*Nginx Configuration Update:*
+#### *Nginx Configuration Update:*
 
 - The controller reloads Nginx to apply the new configuration. This typically involves sending a signal to the Nginx process or using configuration hot reloading.
-*Traffic Routing:*
+#### *Traffic Routing:*
 
 - Incoming traffic is directed to the Nginx Ingress controller.
 - Nginx uses the configured virtual servers and locations to route traffic to the appropriate backend service based on the Ingress rules.
+
+### Creating Elastic Load Balancer (ELB) with Ingress.yaml
+
+- Ingress Manifest: Defines rules for external traffic routing to services.
+- Ingress Controller: Watches for Ingress changes and translates rules into configurations.
+- Cloud Provider Integration: The Controller interacts with the cloud provider (AWS, GCP, Azure) to create ELB.
+- ELB Creation: ELB is created based on Ingress rules, including listeners, target groups, and health checks.
+- DNS Resolution: The Cloud provider assigns a public DNS name to the ELB.
+- Traffic Routing: Incoming traffic to the ELB is distributed to backend services based on Ingress rules.
 
 
 
